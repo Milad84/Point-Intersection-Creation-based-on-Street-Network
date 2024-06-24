@@ -1,59 +1,72 @@
-# Script for Creating Intersection Points from Street Segments
+# Creating Intersection Points from Street Segments
 
-This script identifies and creates intersection points from any street segment layer. It uses ArcPy to perform a spatial intersection and outputs the intersection points to a specified temporary file geodatabase.
+This repository contains scripts to identify and create intersection points from a given layer of street segments. Two approaches are provided: one using ArcPy and the other using open-source GIS libraries.
 
 ## Features
+
+- **Input:** A street segment feature class or GeoDataFrame.
+- **Output:** A feature class or shapefile containing intersection points.
+- **Temporary Storage:** Uses a temporary file geodatabase for ArcPy and a user-specified directory for open-source GIS.
+
+## ArcPy Approach
+
+This script uses ArcPy to perform a spatial intersection and create intersection points from a street network.
+
+### Features
 
 - **Input:** A street segment feature class.
 - **Output:** A feature class containing intersection points.
 - **Temporary Storage:** Uses a temporary file geodatabase to store the output.
 
-## Script Details
+### Script Details
 
 - **Input Street Feature Class:** The `streets_fc` variable should be updated with the path to your street layer.
 - **Temporary File Geodatabase:** A file geodatabase is created at `C:/Temp/TempGDB.gdb` if it doesn't already exist.
 - **Intersection Identification:** The `Intersect` tool is used to identify intersection points and save them to the specified feature class.
 
-## Usage Instructions
+### Usage Instructions
 
 1. **Update the Input Path:** Modify the `streets_fc` variable to point to your input street layer.
 2. **Run the Script:** Execute the script in an ArcGIS Pro environment.
 3. **Check Output:** The intersections will be saved in the `Intersections` feature class within the temporary file geodatabase.
 
+## Open-source GIS Approach
+
+This script uses Shapely and GeoPandas to create intersection points from a street network.
+
+### Features
+
+- **Input:** A street segment GeoDataFrame.
+- **Output:** A shapefile containing intersection points.
+- **Temporary Storage:** Uses a user-specified directory to store the output shapefile.
+
+### Script Details
+
+- **Input Street Feature Class:** Creates a realistic sample of a street network.
+- **Intersection Identification:** The `intersects` method from Shapely is used to identify intersection points.
+- **Output:** Prompts the user for a directory to save the output shapefile.
+
+### Usage Instructions
+
+1. **Run the Script:** Execute the script in a Python environment.
+2. **Enter the Output Directory:** When prompted, enter the directory path where you want to save the intersection points shapefile.
+3. **Check Output:** The intersections will be saved as `Intersection_Points.shp` in the specified directory.
+
 ## Libraries Used
 
-1. `arcpy` - ArcPy is a site package that provides a port and an extension to the ArcGIS Spatial Analyst extension.
-2. `os` - This module provides a portable way of using operating system-dependent functionality.
+### ArcPy Approach
 
-## Example Code
+1. `arcpy`: ArcPy is a Python site package for performing geographic data analysis, data conversion, data management, and map automation with ArcGIS.
 
-```python
-import arcpy
-import os
+### Open-source GIS Approach
 
-# Define the input street feature class
-streets_fc = "CTN_AFP"  # Update with your street layer
+1. `geopandas`: GeoPandas is an open-source project to make working with geospatial data in Python easier. It extends pandas to allow spatial operations on geometric types.
+2. `shapely`: Shapely is a Python package for manipulation and analysis of planar geometric objects.
+3. `matplotlib`: Matplotlib is a plotting library for the Python programming language and its numerical mathematics extension NumPy.
 
-# Create a temporary file geodatabase
-temp_gdb = "C:/Temp/TempGDB.gdb"
-if not arcpy.Exists(temp_gdb):
-    arcpy.management.CreateFileGDB(os.path.dirname(temp_gdb), os.path.basename(temp_gdb))
-print("Temporary file geodatabase created.")
+### Installation
 
-# Define the output feature class for intersections
-intersections_fc = os.path.join(temp_gdb, "Intersections")
+Install the necessary libraries using pip:
 
-try:
-    # Identify intersection points
-    arcpy.analysis.Intersect([streets_fc], intersections_fc, 
-                             join_attributes="ALL", 
-                             output_type="POINT")
-    print("Intersections identified and created successfully.")
-
-except arcpy.ExecuteError as e:
-    print(f"Error: {e}")
-    arcpy.AddError(e)
-except Exception as e:
-    print(f"An unexpected error occurred: {e}")
-    arcpy.AddError(e)
-
+```sh
+pip install geopandas shapely matplotlib
