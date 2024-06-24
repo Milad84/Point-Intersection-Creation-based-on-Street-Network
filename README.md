@@ -1,3 +1,6 @@
+
+![Figure_1](https://github.com/Milad84/Point-Intersection-Creation-based-on-Street-Network/assets/38597478/e666d9be-4045-4d0d-94b8-b503a90cdd82)
+
 # Creating Intersection Points from Street Segments
 
 This repository contains scripts to identify and create intersection points from a given layer of street segments. Two approaches are provided: one using ArcPy and the other using open-source GIS libraries.
