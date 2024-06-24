@@ -1,6 +1,6 @@
 # Script for Creating Intersection Points from Street Segments
 
-This script identifies and creates intersection points from any given layer of street segments. It uses ArcPy to perform a spatial intersection and outputs the intersection points to a specified temporary file geodatabase.
+This script identifies and creates intersection points from any street segment layer. It uses ArcPy to perform a spatial intersection and outputs the intersection points to a specified temporary file geodatabase.
 
 ## Features
 
